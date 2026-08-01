@@ -64,12 +64,45 @@ npm start
 
 Dashboard will run on `http://localhost:3000`
 
-## Connecting Frontend to Dashboard
+## Authentication Flow
 
-To connect the landing page signup to the dashboard, you can:
+The application now has a complete authentication system that connects the frontend and dashboard:
 
-1. **Simple Link**: Add a link in the signup page to `http://localhost:3000`
-2. **Integrated**: Merge dashboard components into the frontend application
+### How It Works
+
+1. **User Registration**: Users sign up through the frontend signup page (`/signup`)
+2. **Token Generation**: Backend generates JWT token upon successful signup/login
+3. **Token Storage**: Token is stored in localStorage along with user data
+4. **Dashboard Access**: User is redirected to dashboard (`http://localhost:3000`)
+5. **Authentication Check**: Dashboard verifies token validity before granting access
+6. **Protected Routes**: Dashboard routes are protected with authentication checks
+
+### Authentication Features
+
+- **Secure Password Storage**: Passwords are hashed using bcryptjs
+- **JWT Token Authentication**: Tokens expire after 24 hours
+- **Protected Dashboard**: Unauthorized users are redirected to login
+- **User State Management**: Login state is maintained across frontend and dashboard
+- **Logout Functionality**: Users can securely logout from both frontend and dashboard
+
+### API Authentication Endpoints
+
+- `POST http://localhost:3002/api/auth/signup` - User registration
+- `POST http://localhost:3002/api/auth/login` - User login
+- `GET http://localhost:3002/api/auth/verify` - Token verification
+
+### Frontend Pages
+
+- `/signup` - User registration page
+- `/login` - User login page
+- Updated navbar with authentication state
+- Dashboard link appears when user is logged in
+
+### Dashboard Protection
+
+- AuthCheck component verifies authentication before rendering dashboard
+- Redirects to login page if token is invalid or missing
+- Logout button in dashboard clears authentication state
 
 ## API Endpoints
 

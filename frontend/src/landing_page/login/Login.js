@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-function Signup() {
+function Login() {
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +22,7 @@ function Signup() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3002/api/auth/signup', formData);
+      const response = await axios.post('http://localhost:3002/api/auth/login', formData);
       
       // Store token in localStorage
       localStorage.setItem('token', response.data.token);
@@ -34,7 +31,7 @@ function Signup() {
       // Redirect to dashboard
       window.location.href = 'http://localhost:3000';
     } catch (err) {
-      setError(err.response?.data?.message || 'Signup failed. Please try again.');
+      setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {
       setLoading(false);
     }
@@ -49,7 +46,7 @@ function Signup() {
       borderRadius: '8px',
       boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
     }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Sign Up</h1>
+      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>Login</h1>
       
       {error && (
         <div style={{ 
@@ -65,26 +62,6 @@ function Signup() {
       )}
 
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '20px' }}>
-          <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Username:
-          </label>
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            style={{
-              width: '100%',
-              padding: '10px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              fontSize: '16px'
-            }}
-          />
-        </div>
-
         <div style={{ marginBottom: '20px' }}>
           <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
             Email:
@@ -115,7 +92,6 @@ function Signup() {
             value={formData.password}
             onChange={handleChange}
             required
-            minLength="6"
             style={{
               width: '100%',
               padding: '10px',
@@ -141,15 +117,15 @@ function Signup() {
             fontWeight: 'bold'
           }}
         >
-          {loading ? 'Creating Account...' : 'Sign Up'}
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
 
       <p style={{ textAlign: 'center', marginTop: '20px' }}>
-        Already have an account? <a href="/login" style={{ color: '#007bff' }}>Login</a>
+        Don't have an account? <a href="/signup" style={{ color: '#007bff' }}>Sign Up</a>
       </p>
     </div>
   );
 }
 
-export default Signup;
+export default Login;
