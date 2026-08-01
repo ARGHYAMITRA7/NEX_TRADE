@@ -22,7 +22,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3002/api/auth/login', formData);
+      const response = await axios.post('/api/auth/login', formData);
       
       // Store token in localStorage
       localStorage.setItem('token', response.data.token);
