@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { positions } from "../data/data";
+import { positions } from "../../data/data";
 import axios from "axios";
 
 const Positions = () => {
