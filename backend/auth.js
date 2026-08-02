@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { UserModel } = require("./model/UserModel");
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key_here";
+const JWT_SECRET = process.env.JWT_SECRET || "nex_trade_default_secret_key";
 
 // Signup Route
 router.post("/signup", async (req, res) => {
