@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { clearAuth, getStoredAuth } from "../auth";
 
 import Menu from "./Menu";
 
 const TopBar = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = localStorage.getItem('user');
-    if (userData) {
-      setUser(JSON.parse(userData));
+    const auth = getStoredAuth();
+    if (auth.user) {
+      setUser(auth.user);
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    window.location.href = 'http://localhost:3001/login';
+    clearAuth();
+    window.location.assign(`${process.env.REACT_APP_FRONTEND_URL || 'http://localhost:3000'}/login`);
   };
 
   return (

@@ -12,7 +12,7 @@ import SupportPage from "./landing_page/support/SupportPage";
 import NotFound from "./landing_page/NotFound";
 import Navbar from "./landing_page/Navbar";
 import Footer from "./landing_page/Footer";
-
+import ProtectedDashboard from "./components/ProtectedDashboard";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,6 +26,7 @@ root.render(
       <Route path="/product" element={<ProductsPage />} />
       <Route path="/pricing" element={<PricingPage />} />
       <Route path="/support" element={<SupportPage />} />
+      <Route path="/dashboard/*" element={<ProtectedDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
     <Footer />

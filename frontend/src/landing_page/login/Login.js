@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { setAuth } from '../../auth';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -8,6 +10,7 @@ function Login() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -23,13 +26,8 @@ function Login() {
 
     try {
       const response = await axios.post('/api/auth/login', formData);
-      
-      // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirect to dashboard
-      window.location.href = 'http://localhost:3000';
+      setAuth(response.data.token, response.data.user);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
     } finally {

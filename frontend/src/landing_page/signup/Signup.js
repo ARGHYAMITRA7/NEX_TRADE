@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { setAuth } from '../../auth';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -26,13 +27,8 @@ function Signup() {
 
     try {
       const response = await axios.post('/api/auth/signup', formData);
-      
-      // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      
-      // Redirect to dashboard
-      window.location.href = 'http://localhost:3000';
+      setAuth(response.data.token, response.data.user);
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed. Please try again.');
     } finally {
